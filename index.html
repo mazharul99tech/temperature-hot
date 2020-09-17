@@ -22,19 +22,32 @@
     <div class="container">
         <form class="col-md-6 m-auto py-5">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <input id="city-location" type="text" class="form-control" placeholder="Enter a location for Weather ...">
                 <div class="input-group-append">
-                    <button type="button" class="btn btn-danger">Search</button>
+                    <button id="search-btn" type="button" class="btn btn-danger">Search</button>
                 </div>
             </div>
         </form>
         <div class="weather-status text-white text-center">
             <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
-            <h1>Dhaka</h1>
-            <h3><span>38.06</span>&deg;C</h3>
+            <h1 id="area">Dhaka</h1>
+            <h3><span id="temperature">38.06</span>&deg;C</h3>
             <h1 class="lead">Clouds</h1>
         </div>
     </div>
+
+    <script>
+        document.getElementById('search-btn').addEventListener("click", function(){
+            const cityLocation = document.getElementById('city-location').value;
+            fetch('https://api.openweathermap.org/data/2.5/weather?q='+cityLocation+'&appid=0a427e5abeb88d3614d44ec81862ac26')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('area').innerText = data.name;
+                const cityTemp = data.main;
+                document.getElementById('temperature').innerText = cityTemp.temp;
+            })
+        })
+    </script>
 
 </body>
 
